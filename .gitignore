@@ -44,3 +44,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+/android/key.properties
+/android/app/upload-keystore.jks
+
+/ios/Runner.app.dSYM.zip
+/ios/Runner.ipa
+/ios/fastlane/
+/ios/build/
