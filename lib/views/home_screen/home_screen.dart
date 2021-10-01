@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:qrquick/views/cud_screen/cud_screen.dart';
 
 import '../../globals.dart' as globals;
 import '../../models/app_model.dart';
@@ -18,13 +19,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   final double bottomSize = 60;
-  late PageController controllerMonth;
-  late DateTime today;
 
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
-    controllerMonth.dispose();
     super.dispose();
   }
 
@@ -32,16 +30,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
-
-    controllerMonth = PageController(initialPage: 9999, keepPage: true);
-
-    Stream timer = Stream.periodic(Duration(minutes: 5), (i) {
-      return DateTime.now();
-    });
-
-    timer.listen((data) {
-      if (mounted) {}
-    });
   }
 
   @override
@@ -87,13 +75,20 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return CUDScreen();
+                      }),
+                    );
+                  },
                   backgroundColor: globals.appThemeDict[appTheme]['colors'][0],
                   child: Stack(
                     children: [
                       Center(
                         child: Icon(
-                          Icons.home,
+                          Icons.add,
                           color: textColor,
                         ),
                       ),
