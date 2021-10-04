@@ -52,6 +52,14 @@ dependencies:
   rive: ^0.7.28
   http: ^0.13.3
   uuid: ^3.0.4
+  qr_flutter: ^4.0.0
+    # git:
+    #   url: https://github.com/theyakka/qr.flutter
+  qr_code_scanner: ^0.5.2
+  file_picker: ^4.1.3
+  flutter_qr_reader: ^1.0.5
+  image_picker: ^0.8.4+2
+  receive_sharing_intent: ^1.4.5
 
 dev_dependencies:
   flutter_test:

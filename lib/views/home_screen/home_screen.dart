@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:qrquick/views/cud_screen/cud_screen.dart';
+import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
 import '../../globals.dart' as globals;
 import '../../models/app_model.dart';
@@ -19,17 +21,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   final double bottomSize = 60;
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
-    super.dispose();
-  }
+  late StreamSubscription _intentDataStreamSubscription;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
+    initReceiveSharing();
+  }
+
+  @override
+  void dispose() {
+    _intentDataStreamSubscription.cancel();
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
   }
 
   @override
@@ -37,6 +42,43 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.resumed) {}
+  }
+
+  void initReceiveSharing() {
+    _intentDataStreamSubscription = ReceiveSharingIntent.getMediaStream()
+        .listen((List<SharedMediaFile> files) {
+      if (files.isNotEmpty) {
+        receiveContent(sharedMedias: files);
+      }
+    }, onError: (err) {
+      print("getIntentDataStream error: $err");
+    });
+
+    ReceiveSharingIntent.getInitialMedia().then((List<SharedMediaFile> files) {
+      if (files.isNotEmpty) {
+        receiveContent(sharedMedias: files);
+      }
+    });
+
+    _intentDataStreamSubscription =
+        ReceiveSharingIntent.getTextStream().listen((String value) {
+      if (value.length > 0) {
+        receiveContent(sharedText: value);
+      }
+    }, onError: (err) {
+      print("getLinkStream error: $err");
+    });
+
+    ReceiveSharingIntent.getInitialText().then((String? value) {
+      if ((value?.length ?? 0) > 0) {
+        receiveContent(sharedText: value);
+      }
+    });
+  }
+
+  void receiveContent({sharedText, sharedMedias}) {
+    print(sharedText);
+    print(sharedMedias);
   }
 
   @override
