@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:qrquick/models/scan_model.dart';
 import 'package:qrquick/views/cud_screen/cud_screen.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
@@ -13,6 +14,7 @@ import '../../models/app_model.dart';
 import '../../views/all_widgets/bottom_bar_clipper.dart';
 import '../../views/love_screen/love_screen.dart';
 import '../../views/setting_screen/setting_screen.dart';
+import 'local_widgets/code_list_view.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -101,15 +103,34 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         child: Stack(
           children: [
             Container(
-              padding: EdgeInsets.only(bottom: bottomSize),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomCenter,
-                  colors: globals.appThemeDict[appTheme]['colors'],
+                padding: EdgeInsets.only(bottom: bottomSize),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomCenter,
+                    colors: globals.appThemeDict[appTheme]['colors'],
+                  ),
                 ),
-              ),
-            ),
+                child: Consumer<AppModel>(
+                  builder: (_, data, ___) {
+                    List codeList = data.codeList;
+
+                    if (codeList.length > 0) {
+                      return CodeListView(accounts: codeList);
+                    }
+                    return Center(
+                      child: Text(
+                        'No account provided\nPress "+" to add account',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
+                  },
+                )),
             Positioned(
               bottom: bottomSize * 0.53,
               right: 0,
@@ -123,7 +144,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       MaterialPageRoute(builder: (context) {
                         return CUDScreen();
                       }),
-                    );
+                    ).then((value) {
+                      Provider.of<ScanModel>(context, listen: false)
+                          .updateContent("");
+                    });
                   },
                   backgroundColor: globals.appThemeDict[appTheme]['colors'][0],
                   child: Stack(

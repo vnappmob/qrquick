@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qrquick/models/app_model.dart';
 import 'package:qrquick/models/scan_model.dart';
 
 class ScanScreen extends StatefulWidget {
@@ -31,6 +30,8 @@ class _ScanScreenState extends State<ScanScreen> {
     super.dispose();
   }
 
+  bool found = false;
+
   @override
   Widget build(BuildContext context) {
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
@@ -50,13 +51,16 @@ class _ScanScreenState extends State<ScanScreen> {
                   this.controller = controller;
                 });
                 controller.scannedDataStream.listen((scanData) {
-                  controller.pauseCamera();
-                  print(scanData.code);
-                  Provider.of<ScanModel>(context, listen: false)
-                      .updateReceive(scanData)
-                      .then((value) {
-                    Navigator.pop(context);
-                  });
+                  if (!found) {
+                    print('found: ${scanData.code}');
+                    found = true;
+                    controller.pauseCamera();
+                    Provider.of<ScanModel>(context, listen: false)
+                        .updateContent(scanData.code)
+                        .then((value) {
+                      Navigator.pop(context);
+                    });
+                  }
                 });
               },
               overlay: QrScannerOverlayShape(
