@@ -47,10 +47,28 @@ class AppModel extends ChangeNotifier {
     await _pref.setString('codeList', jsonEncode(_codeList));
   }
 
-  Future<void> addCode(Map value) async {
+  Future<void> addCode(value) async {
     _codeList.add(value);
     await updatePref();
     notifyListeners();
+  }
+
+  Future<void> updateCode(code, {remove = false}) async {
+    bool updated = false;
+    int foundIndex =
+        codeList.indexWhere((_code) => _code['uuid'] == code['uuid']);
+    if (foundIndex > -1) {
+      if (remove) {
+        codeList.removeAt(foundIndex);
+      } else {
+        codeList[foundIndex] = code;
+      }
+      updated = true;
+    }
+    if (updated) {
+      await updatePref();
+      notifyListeners();
+    }
   }
 
   Future<void> truncateCodeList() async {

@@ -14,6 +14,8 @@ import '../../models/app_model.dart';
 import '../../models/scan_model.dart';
 import '../../views/all_widgets/card_view.dart';
 
+var uuid = Uuid();
+
 class CUDScreen extends StatefulWidget {
   @override
   _CUDScreenState createState() => _CUDScreenState();
@@ -43,14 +45,25 @@ class _CUDScreenState extends State<CUDScreen> {
     });
   }
 
-  var uuid = Uuid();
+  void addNewCode(uuid, name, content) {
+    var code = {
+      'uuid': uuid,
+      'name': name,
+      'content': content,
+      'timestamp': '${DateTime.now().millisecondsSinceEpoch ~/ 1000}'
+    };
+    Provider.of<AppModel>(context, listen: false).addCode(code).then((value) {
+      Navigator.pop(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var appTheme = context.select((AppModel _) => _.appTheme);
     var textColor = globals.appThemeDict[appTheme]['text'] ?? Colors.white;
 
-    var textContent = context.select((ScanModel _) => _.content);
-    _contentController.text = textContent;
+    var content = context.select((ScanModel _) => _.content);
+    _contentController.text = content;
 
     return GestureDetector(
       onTap: () {
@@ -68,18 +81,12 @@ class _CUDScreenState extends State<CUDScreen> {
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () {
-                var code = {
-                  'uuid': uuid.v1(),
-                  'name': _nameController.text,
-                  'content': textContent,
-                  'timestamp':
-                      '${DateTime.now().millisecondsSinceEpoch ~/ 1000}'
-                };
-                Provider.of<AppModel>(context, listen: false)
-                    .addCode(code)
-                    .then((value) {
-                  Navigator.pop(context);
-                });
+                var _uuid = uuid.v1();
+                var _name = _nameController.text;
+                if (_name.length == 0) {
+                  _name = _uuid.substring(0, _uuid.indexOf('-'));
+                }
+                addNewCode(_uuid, _name, content);
               },
             ),
           ],

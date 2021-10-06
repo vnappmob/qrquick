@@ -8,9 +8,9 @@ import 'package:qrquick/views/all_widgets/account_logo.dart';
 class CodeListView extends StatefulWidget {
   CodeListView({
     Key? key,
-    required this.accounts,
+    required this.codeList,
   }) : super(key: key);
-  final List<dynamic> accounts;
+  final List<dynamic> codeList;
 
   @override
   _CodeListViewState createState() => _CodeListViewState();
@@ -29,10 +29,10 @@ class _CodeListViewState extends State<CodeListView> {
     return Container(
       padding: EdgeInsets.all(12.0),
       child: ListView(
-        children: List.generate(widget.accounts.length, (index) {
-          var account = widget.accounts[index];
+        children: List.generate(widget.codeList.length, (index) {
+          var code = widget.codeList[index];
           return Dismissible(
-            key: ValueKey<String>(account['uuid']),
+            key: ValueKey<String>(code['uuid']),
             direction: DismissDirection.endToStart,
             background: Container(color: Colors.white),
             secondaryBackground: Container(
@@ -59,10 +59,10 @@ class _CodeListViewState extends State<CodeListView> {
                       "Are you sure you want to remove this account?",
                     ),
                     actions: <Widget>[
-                      FlatButton(
+                      TextButton(
                           onPressed: () => Navigator.of(context).pop(true),
                           child: const Text("Delete")),
-                      FlatButton(
+                      TextButton(
                         onPressed: () => Navigator.of(context).pop(false),
                         child: const Text("Cancel"),
                       ),
@@ -73,7 +73,9 @@ class _CodeListViewState extends State<CodeListView> {
             },
             onDismissed: (DismissDirection direction) {
               if (direction == DismissDirection.endToStart) {
-                print("going to remove");
+                print("going to remove ${code['uuid']}");
+                Provider.of<AppModel>(context, listen: false)
+                    .updateCode(code, remove: true);
               }
             },
             child: Card(
@@ -86,16 +88,16 @@ class _CodeListViewState extends State<CodeListView> {
               child: ListTile(
                 leading: AccountLogo(
                   textColor: textColor,
-                  character: 'T',
+                  character: code['name'].toString()[0],
                 ),
                 title: Text(
-                  '${account['name']}',
+                  '${code['name']}',
                   style: TextStyle(
                     color: textColor,
                   ),
                 ),
                 subtitle: Text(
-                  '${account['name']}',
+                  '${code['timestamp']}',
                   style: TextStyle(
                     color: textColor,
                   ),

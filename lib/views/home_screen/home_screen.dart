@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:provider/provider.dart';
 import 'package:qrquick/models/scan_model.dart';
 import 'package:qrquick/views/cud_screen/cud_screen.dart';
@@ -78,9 +79,24 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     });
   }
 
-  void receiveContent({sharedText, sharedMedias}) {
-    print(sharedText);
-    print(sharedMedias);
+  Future<void> receiveContent({sharedText, sharedMedias}) async {
+    String content = "";
+    if (sharedText != null) {
+      content = sharedText;
+    } else if (sharedMedias != null) {
+      content = await FlutterQrReader.imgScan(
+        sharedMedias[0].path,
+      );
+    }
+    Provider.of<ScanModel>(context, listen: false).updateContent(content);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return CUDScreen();
+      }),
+    ).then((value) {
+      Provider.of<ScanModel>(context, listen: false).updateContent("");
+    });
   }
 
   @override
@@ -116,11 +132,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     List codeList = data.codeList;
 
                     if (codeList.length > 0) {
-                      return CodeListView(accounts: codeList);
+                      return CodeListView(codeList: codeList);
                     }
                     return Center(
                       child: Text(
-                        'No account provided\nPress "+" to add account',
+                        'No code provided\nPress "+" to add',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: textColor,
