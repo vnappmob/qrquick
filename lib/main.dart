@@ -3,13 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:provider/provider.dart';
 import 'package:rate_my_app/rate_my_app.dart';
-import 'package:qrquick/models/app_model.dart';
-import 'package:qrquick/models/language_model.dart';
-import 'package:qrquick/views/home_screen/home_screen.dart';
 
 import 'globals.dart' as globals;
+import 'models/app_model.dart';
+import 'models/language_model.dart';
+import 'models/scan_model.dart';
+import 'views/home_screen/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,11 +27,16 @@ Future<void> bootApp() async {
   LanguageModel languageModel = LanguageModel();
   await languageModel.fetchLocale();
 
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
+  }
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider<AppModel>(create: (_) => appModel),
         ChangeNotifierProvider<LanguageModel>(create: (_) => languageModel),
+        ChangeNotifierProvider<ScanModel>(create: (context) => ScanModel()),
       ],
       child: InitApp(),
     ),
@@ -50,7 +57,7 @@ class InitApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         debugShowCheckedModeBanner: false,
-        title: 'qrquick',
+        title: 'QR Quick',
         theme: ThemeData(
           platform: TargetPlatform.iOS,
           primarySwatch: Colors.blueGrey,

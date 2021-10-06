@@ -39,6 +39,44 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  List _codeList = [];
+  List get codeList => _codeList;
+
+  Future<void> updatePref() async {
+    var _pref = await SharedPreferences.getInstance();
+    await _pref.setString('codeList', jsonEncode(_codeList));
+  }
+
+  Future<void> addCode(value) async {
+    _codeList.add(value);
+    await updatePref();
+    notifyListeners();
+  }
+
+  Future<void> updateCode(code, {remove = false}) async {
+    bool updated = false;
+    int foundIndex =
+        codeList.indexWhere((_code) => _code['uuid'] == code['uuid']);
+    if (foundIndex > -1) {
+      if (remove) {
+        codeList.removeAt(foundIndex);
+      } else {
+        codeList[foundIndex] = code;
+      }
+      updated = true;
+    }
+    if (updated) {
+      await updatePref();
+      notifyListeners();
+    }
+  }
+
+  Future<void> truncateCodeList() async {
+    _codeList = [];
+    await updatePref();
+    notifyListeners();
+  }
+
   Future<void> fetchSaved() async {
     var prefs = await SharedPreferences.getInstance();
 
@@ -47,5 +85,9 @@ class AppModel extends ChangeNotifier {
 
     _appTheme = prefs.getString('appTheme') ?? _appTheme;
     print('---appTheme: $_appTheme');
+
+    String codeList = prefs.getString('codeList') ?? jsonEncode(_codeList);
+    _codeList = jsonDecode(codeList);
+    print('---codeList: $_codeList');
   }
 }
