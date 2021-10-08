@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:qrquick/globals.dart' as globals;
-import 'package:qrquick/models/app_model.dart';
-import 'package:qrquick/views/all_widgets/card_view.dart';
 
+import '../../globals.dart' as globals;
+import '../../models/app_model.dart';
+import '../../views/all_widgets/card_view.dart';
 import 'local_widgets/about_view.dart';
 import 'local_widgets/setting_view.dart';
 import 'local_widgets/theme_view.dart';

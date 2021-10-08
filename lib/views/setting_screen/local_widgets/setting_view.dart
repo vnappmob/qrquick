@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../globals.dart' as globals;
 import '../../../models/app_model.dart';
 import '../../../models/language_model.dart';
-import '../local_widgets/language_screen.dart';
+import 'language_screen.dart';
 
 class SettingView extends StatelessWidget {
   @override

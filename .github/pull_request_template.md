@@ -12,7 +12,7 @@
 
  - [ ] I read the [Contributor Guide] and followed the process outlined there for submitting PRs.
  - [ ] I updated CHANGELOG.md with a description of the change.
- - [ ] Iam willing to follow-up on review comments in a timely manner.
+ - [ ] I am willing to follow-up on review comments in a timely manner.
 
 <!-- Links -->
  [Contributor Guide]: https://github.com/vnappmob

@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:qrquick/models/app_model.dart';
-import 'package:qrquick/globals.dart' as globals;
-import 'package:qrquick/views/all_widgets/account_logo.dart';
+
+import '../../../globals.dart' as globals;
+import '../../../models/app_model.dart';
+import '../../../views/all_widgets/account_logo.dart';
+import '../../../views/code_screen/code_screen.dart';
 
 class CodeListView extends StatefulWidget {
   CodeListView({
-    Key? key,
     required this.codeList,
-  }) : super(key: key);
+  });
   final List<dynamic> codeList;
 
   @override
@@ -75,7 +76,7 @@ class _CodeListViewState extends State<CodeListView> {
               if (direction == DismissDirection.endToStart) {
                 print("going to remove ${code['uuid']}");
                 Provider.of<AppModel>(context, listen: false)
-                    .updateCode(code, remove: true);
+                    .updateCodeList(code, remove: true);
               }
             },
             child: Card(
@@ -102,7 +103,16 @@ class _CodeListViewState extends State<CodeListView> {
                     color: textColor,
                   ),
                 ),
-                onTap: () async {},
+                onTap: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return CodeScreen(
+                        code: code,
+                      );
+                    }),
+                  );
+                },
               ),
             ),
           );
