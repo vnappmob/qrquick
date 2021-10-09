@@ -42,18 +42,13 @@ class AppModel extends ChangeNotifier {
   List _codeList = [];
   List get codeList => _codeList;
 
-  Future<void> updatePref() async {
-    var _pref = await SharedPreferences.getInstance();
-    await _pref.setString('codeList', jsonEncode(_codeList));
-  }
-
-  Future<void> addCode(value) async {
+  Future<void> addCodeList(value) async {
     _codeList.add(value);
-    await updatePref();
+    await updatePref('codeList', jsonEncode(_codeList));
     notifyListeners();
   }
 
-  Future<void> updateCode(code, {remove = false}) async {
+  Future<void> updateCodeList(code, {remove = false}) async {
     bool updated = false;
     int foundIndex =
         codeList.indexWhere((_code) => _code['uuid'] == code['uuid']);
@@ -66,15 +61,20 @@ class AppModel extends ChangeNotifier {
       updated = true;
     }
     if (updated) {
-      await updatePref();
+      await updatePref('codeList', jsonEncode(_codeList));
       notifyListeners();
     }
   }
 
   Future<void> truncateCodeList() async {
     _codeList = [];
-    await updatePref();
+    await updatePref('codeList', jsonEncode(_codeList));
     notifyListeners();
+  }
+
+  Future<void> updatePref(key, value) async {
+    var _pref = await SharedPreferences.getInstance();
+    await _pref.setString(key, value);
   }
 
   Future<void> fetchSaved() async {

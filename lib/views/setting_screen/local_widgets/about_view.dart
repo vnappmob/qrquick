@@ -6,11 +6,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
-import 'package:qrquick/globals.dart' as globals;
-import 'package:qrquick/models/app_model.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../globals.dart' as globals;
+import '../../../models/app_model.dart';
 import '../../love_screen/love_screen.dart';
 
 class AboutView extends StatefulWidget {

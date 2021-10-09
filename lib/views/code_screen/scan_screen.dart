@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qrquick/models/scan_model.dart';
+
+import '../../models/scan_model.dart';
 
 class ScanScreen extends StatefulWidget {
   @override
@@ -56,7 +57,7 @@ class _ScanScreenState extends State<ScanScreen> {
                     found = true;
                     controller.pauseCamera();
                     Provider.of<ScanModel>(context, listen: false)
-                        .updateContent(scanData.code)
+                        .updateScanContent(scanData.code)
                         .then((value) {
                       Navigator.pop(context);
                     });

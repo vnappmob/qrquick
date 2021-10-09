@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 const bool PRODUCTION = bool.fromEnvironment('dart.vm.product');
 
 const String appIdentifier = 'com.vnappmob.qrquick';
-const String appStoreIdentifier = 'xxxxxxxx';
+const String appStoreIdentifier = '1589085179';
 const String googlePlayUrl =
     'https://play.google.com/store/apps/details?id=$appIdentifier';
 const String appStoreUrl = 'https://apps.apple.com/app/id$appStoreIdentifier';

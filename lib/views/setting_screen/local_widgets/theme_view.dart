@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/app_model.dart';
+
 import '../../../globals.dart' as globals;
+import '../../../models/app_model.dart';
 
 class ThemeView extends StatelessWidget {
   List<Widget> getThemeList(context, currentTheme) {

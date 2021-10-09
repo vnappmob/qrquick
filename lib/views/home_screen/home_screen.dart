@@ -1,21 +1,23 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:provider/provider.dart';
-import 'package:qrquick/models/scan_model.dart';
-import 'package:qrquick/views/cud_screen/cud_screen.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
 import '../../globals.dart' as globals;
 import '../../models/app_model.dart';
+import '../../models/scan_model.dart';
 import '../../views/all_widgets/bottom_bar_clipper.dart';
+import '../../views/code_screen/code_screen.dart';
 import '../../views/love_screen/love_screen.dart';
 import '../../views/setting_screen/setting_screen.dart';
 import 'local_widgets/code_list_view.dart';
+
+final platformChannel =
+    const MethodChannel('com.vnappmob.qrquick/UserDefaultsChannel');
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -84,18 +86,18 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (sharedText != null) {
       content = sharedText;
     } else if (sharedMedias != null) {
-      content = await FlutterQrReader.imgScan(
-        sharedMedias[0].path,
-      );
+      content = await platformChannel.invokeMethod('imageScan', {
+        'file_path': sharedMedias[0].path,
+      });
     }
-    Provider.of<ScanModel>(context, listen: false).updateContent(content);
+    Provider.of<ScanModel>(context, listen: false).updateScanContent(content);
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return CUDScreen();
+        return CodeScreen();
       }),
     ).then((value) {
-      Provider.of<ScanModel>(context, listen: false).updateContent("");
+      Provider.of<ScanModel>(context, listen: false).updateScanContent("");
     });
   }
 
@@ -155,15 +157,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton(
                   onPressed: () {
+                    // Provider.of<CodeModel>(context, listen: false)
+                    //     .updateCode({});
+                    Provider.of<ScanModel>(context, listen: false)
+                        .updateScanContent("");
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return CUDScreen();
+                        return CodeScreen();
                       }),
-                    ).then((value) {
-                      Provider.of<ScanModel>(context, listen: false)
-                          .updateContent("");
-                    });
+                    );
                   },
                   backgroundColor: globals.appThemeDict[appTheme]['colors'][0],
                   child: Stack(
