@@ -36,44 +36,7 @@ const Map<String, dynamic> productDict = {
     'description': 'Sponsor 50❤️ to this app'
   }
 };
-final List<Map<String, dynamic>> appList = [
-  {
-    'title': 'vLunar',
-    'description': {
-      'en': 'Vietnamese lunar calendar',
-      'vi': 'Âm lịch Việt Nam'
-    },
-    'icon': 'assets/iha/vlunar.png',
-    'onelink': 'http://onelink.to/xmwnpy',
-  },
-  {
-    'title': 'PipPip',
-    'description': {
-      'en': 'Get notify on every new hour',
-      'vi': 'Chuông báo mỗi tiếng'
-    },
-    'icon': 'assets/iha/pippip.png',
-    'onelink': 'http://onelink.to/undta5',
-  },
-  {
-    'title': 'MoPip',
-    'description': {
-      'en': 'Diary book with privacy first',
-      'vi': 'Nhật ký cá nhân'
-    },
-    'icon': 'assets/iha/mopip.png',
-    'onelink': 'http://onelink.to/22yxb5',
-  },
-  {
-    'title': 'vPrice',
-    'description': {
-      'en': 'Gold & Exchange rate in Vietnam market',
-      'vi': 'Giá vàng & Tỷ giá'
-    },
-    'icon': 'assets/iha/vprice.png',
-    'onelink': 'http://onelink.to/4surga',
-  }
-];
+final List<Map<String, dynamic>> appList = [];
 
 final Map<String, dynamic> appThemeDict = const <String, dynamic>{
   'plum_plate': {

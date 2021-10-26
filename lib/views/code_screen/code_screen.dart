@@ -13,6 +13,8 @@ import '../../models/scan_model.dart';
 import '../../views/all_widgets/card_view.dart';
 import 'scan_screen.dart';
 
+final platformChannel =
+    const MethodChannel('com.vnappmob.qrquick/UserDefaultsChannel');
 var uuid = Uuid();
 
 class CodeScreen extends StatefulWidget {
@@ -39,6 +41,7 @@ class _CodeScreenState extends State<CodeScreen> {
         'content': '',
         'uuid': '',
         'timestamp': '',
+        'home_widget': false
       };
     } else {
       code = widget.code;
@@ -285,9 +288,6 @@ class _CodeScreenState extends State<CodeScreen> {
       codeContent = _contentController.text;
     });
   }
-
-  final platformChannel =
-      const MethodChannel('com.vnappmob.qrquick/UserDefaultsChannel');
 
   void pickPhoto() async {
     final pickedFile = await ImagePicker().pickImage(
