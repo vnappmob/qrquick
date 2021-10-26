@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../globals.dart' as globals;
 import '../../../models/app_model.dart';
 import '../../../views/all_widgets/account_logo.dart';
 import '../../../views/code_screen/code_screen.dart';
+
+final platformChannel =
+    const MethodChannel('com.vnappmob.qrquick/UserDefaultsChannel');
 
 class CodeListView extends StatefulWidget {
   CodeListView({
@@ -91,16 +97,34 @@ class _CodeListViewState extends State<CodeListView> {
                   textColor: textColor,
                   character: code['name'].toString()[0],
                 ),
+                trailing: IconButton(
+                  onPressed: () async {
+                    Provider.of<AppModel>(context, listen: false)
+                        .updateCodeList(code, homeWidget: true);
+                  },
+                  icon: Icon(
+                    Icons.widgets,
+                    color: (code['home_widget'] ?? false)
+                        ? textColor
+                        : Colors.grey,
+                  ),
+                ),
                 title: Text(
                   '${code['name']}',
                   style: TextStyle(
                     color: textColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 subtitle: Text(
-                  '${code['timestamp']}',
+                  DateFormat('yyyy-MM-dd hh:mm aaa').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                      int.parse(code['timestamp']) * 1000,
+                    ),
+                  ),
                   style: TextStyle(
                     color: textColor,
+                    fontStyle: FontStyle.italic,
                   ),
                 ),
                 onTap: () async {

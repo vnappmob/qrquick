@@ -2,23 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>10007</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
-			<key>PHSupportedMediaTypes</key>
-		    <array>
-			   <string>Image</string>
-		    </array>
 			<key>NSExtensionActivationRule</key>
 			<dict>
-                <key>NSExtensionActivationSupportsText</key>
+				<key>NSExtensionActivationSupportsImageWithMaxCount</key>
+				<integer>1</integer>
+				<key>NSExtensionActivationSupportsText</key>
 				<true/>
 				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
-            	<integer>1</integer>
-                <key>NSExtensionActivationSupportsImageWithMaxCount</key>
-                <integer>1</integer>
-            </dict>
+				<integer>1</integer>
+			</dict>
+			<key>PHSupportedMediaTypes</key>
+			<array>
+				<string>Image</string>
+			</array>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>
