@@ -1,7 +1,7 @@
 ## How to contribute on translation
 
 - Fork this project
-- Go to [lib/l10n](l10n) directory
+- Go to [lib/l10n](.) directory
 - Create new file with name like app_{locale_code}.arb where locale_code would be something like es (for Español), ja (for Japanese)...
 - Copy content from app_en.arb to your new file
 - Start your translation on the right side of ":", for example: "hello": "Hello" -> "hello": "Hola"
