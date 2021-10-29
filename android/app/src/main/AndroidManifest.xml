@@ -13,7 +13,7 @@
     </queries>
 
     <application
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:label="QR Quick">
         <receiver
             android:name=".AppWidget"
