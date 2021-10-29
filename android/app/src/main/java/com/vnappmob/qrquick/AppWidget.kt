@@ -53,8 +53,8 @@ class AppWidget : AppWidgetProvider() {
 
             val views = RemoteViews(context.packageName, R.layout.app_widget)
             views.setTextViewText(R.id.qrName, widgetName)
-            val test = encodeAsBitmap(widgetContent.toString(), width = 600, height = 600)
-            views.setImageViewBitmap(R.id.qrImageView, test)
+            val widgetQRBitmap = encodeAsBitmap(widgetContent.toString(), width = 600, height = 600)
+            views.setImageViewBitmap(R.id.qrImageView, widgetQRBitmap)
 
             views.setOnClickPendingIntent(
                 R.id.widgetRoot,
