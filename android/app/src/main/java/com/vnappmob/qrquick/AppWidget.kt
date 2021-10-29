@@ -1,9 +1,11 @@
 package com.vnappmob.qrquick
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.widget.RemoteViews
 
 import android.graphics.Bitmap
@@ -43,6 +45,8 @@ class AppWidget : AppWidgetProvider() {
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int
         ) {
+
+
             val sharedPref = context.getSharedPreferences("FlutterSharedPreferences", MODE_PRIVATE)
             val widgetName = sharedPref?.getString("flutter.widgetName", "")
             val widgetContent = sharedPref?.getString("flutter.widgetContent", "")
@@ -51,6 +55,13 @@ class AppWidget : AppWidgetProvider() {
             views.setTextViewText(R.id.qrName, widgetName)
             val test = encodeAsBitmap(widgetContent.toString(), width = 600, height = 600)
             views.setImageViewBitmap(R.id.qrImageView, test)
+
+            views.setOnClickPendingIntent(
+                R.id.widgetRoot,
+                PendingIntent.getActivity(
+                    context, 0, Intent(context, MainActivity::class.java), 0
+                )
+            )
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
