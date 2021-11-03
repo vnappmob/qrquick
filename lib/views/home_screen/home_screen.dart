@@ -157,8 +157,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton(
                   onPressed: () {
-                    // Provider.of<CodeModel>(context, listen: false)
-                    //     .updateCode({});
                     Provider.of<ScanModel>(context, listen: false)
                         .updateScanContent("");
                     Navigator.push(

@@ -1,4 +1,5 @@
 {
+    "no_code_homescreen": "No code provided\nPress "+" to add",
     "remove_confirm_long": "Are you sure you want to remove this code?",
     "remove_confirm": "Remove confirmation",
     "paste_from_clipboard": "Paste from clipboard",
