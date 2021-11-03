@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -61,17 +62,17 @@ class _CodeListViewState extends State<CodeListView> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text("Remove Confirmation"),
-                    content: const Text(
-                      "Are you sure you want to remove this account?",
+                    title: Text(AppLocalizations.of(context)!.remove_confirm),
+                    content: Text(
+                      AppLocalizations.of(context)!.remove_confirm_long,
                     ),
                     actions: <Widget>[
                       TextButton(
                           onPressed: () => Navigator.of(context).pop(true),
-                          child: const Text("Delete")),
+                          child: Text(AppLocalizations.of(context)!.delete)),
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(false),
-                        child: const Text("Cancel"),
+                        child: Text(AppLocalizations.of(context)!.cancel),
                       ),
                     ],
                   );
