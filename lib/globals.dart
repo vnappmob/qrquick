@@ -13,6 +13,7 @@ const String appShareSubject = 'Please check out this cool app! ';
 const String appSupportUrl = 'https://app.vnappmob.com/contact';
 const String appLegalese =
     'Copyright (c) 2021 VNAppMob\nhttps://app.vnappmob.com\nhi@vnappmob.com';
+const String appRepoUrl = 'https://github.com/vnappmob/qrquick';
 
 final Map<String, String> appLanguageDict = const <String, String>{
   'en': 'English',

@@ -18,8 +18,12 @@ final platformChannel =
 var uuid = Uuid();
 
 class CodeScreen extends StatefulWidget {
-  CodeScreen({this.code});
+  CodeScreen({
+    this.code,
+    this.preContent,
+  });
   final dynamic code;
+  final String? preContent;
 
   @override
   _CodeScreenState createState() => _CodeScreenState();
@@ -38,11 +42,12 @@ class _CodeScreenState extends State<CodeScreen> {
     if (widget.code == null) {
       code = {
         'name': '',
-        'content': '',
+        'content': widget.preContent ?? '',
         'uuid': '',
         'timestamp': '',
         'home_widget': false
       };
+      codeContent = widget.preContent ?? '';
     } else {
       code = widget.code;
       codeName = widget.code['name'] ?? '';
@@ -105,7 +110,9 @@ class _CodeScreenState extends State<CodeScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            widget.code == null ? "Add new code" : widget.code['name'],
+            widget.code == null
+                ? AppLocalizations.of(context)!.add_new_code
+                : widget.code['name'],
             style: TextStyle(color: textColor),
           ),
           backgroundColor: globals.appThemeDict[appTheme]['colors'][0],
@@ -119,7 +126,7 @@ class _CodeScreenState extends State<CodeScreen> {
             ] else ...[
               CupertinoButton(
                 child: Text(
-                  'Update',
+                  AppLocalizations.of(context)!.update,
                   style: TextStyle(
                     color: textColor,
                   ),
@@ -154,7 +161,7 @@ class _CodeScreenState extends State<CodeScreen> {
                           hintStyle: TextStyle(
                             color: textColor.withOpacity(0.6),
                           ),
-                          hintText: 'Name',
+                          hintText: AppLocalizations.of(context)!.name,
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
@@ -181,7 +188,7 @@ class _CodeScreenState extends State<CodeScreen> {
                           hintStyle: TextStyle(
                             color: textColor.withOpacity(0.6),
                           ),
-                          hintText: 'Code content',
+                          hintText: AppLocalizations.of(context)!.code_content,
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
@@ -207,7 +214,8 @@ class _CodeScreenState extends State<CodeScreen> {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton.icon(
-                                label: Text('Choose from photo library'),
+                                label: Text(AppLocalizations.of(context)!
+                                    .choose_from_photo_lib),
                                 icon: Icon(Icons.photo_album),
                                 onPressed: pickPhoto,
                               ),
@@ -215,7 +223,8 @@ class _CodeScreenState extends State<CodeScreen> {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton.icon(
-                                label: Text('Scan from camera'),
+                                label: Text(AppLocalizations.of(context)!
+                                    .scan_from_camera),
                                 icon: Icon(Icons.qr_code_scanner),
                                 onPressed: scanCamera,
                               ),
@@ -223,7 +232,8 @@ class _CodeScreenState extends State<CodeScreen> {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton.icon(
-                                label: Text('Paste from clipboard'),
+                                label: Text(AppLocalizations.of(context)!
+                                    .paste_from_clipboard),
                                 icon: Icon(Icons.paste),
                                 onPressed: pasteClipboard,
                               ),

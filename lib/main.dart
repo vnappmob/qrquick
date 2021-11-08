@@ -12,6 +12,7 @@ import 'models/app_model.dart';
 import 'models/language_model.dart';
 import 'models/scan_model.dart';
 import 'views/home_screen/home_screen.dart';
+import 'views/welcome_screen/welcome_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -106,7 +107,7 @@ class _MainPageState extends State<MainPage> {
       body: IndexedStack(
         index: appTutorial ? 0 : 1,
         children: [
-          appTutorial ? Center(child: HomeScreen()) : Container(),
+          appTutorial ? WelcomeScreen() : Container(),
           appTutorial ? Container() : Center(child: HomeScreen()),
         ],
       ),
