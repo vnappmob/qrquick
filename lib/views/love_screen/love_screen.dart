@@ -73,7 +73,6 @@ class _LoveScreenState extends State<LoveScreen> {
               ),
             ),
             iapView,
-            InHouseApp(),
           ],
         ),
       ),

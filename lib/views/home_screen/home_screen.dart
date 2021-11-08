@@ -90,15 +90,15 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         'file_path': sharedMedias[0].path,
       });
     }
-    Provider.of<ScanModel>(context, listen: false).updateScanContent(content);
+
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return CodeScreen();
+        return CodeScreen(
+          preContent: content,
+        );
       }),
-    ).then((value) {
-      Provider.of<ScanModel>(context, listen: false).updateScanContent("");
-    });
+    );
   }
 
   @override
@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     }
                     return Center(
                       child: Text(
-                        'No code provided\nPress "+" to add',
+                        AppLocalizations.of(context)!.no_code_homescreen,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: textColor,

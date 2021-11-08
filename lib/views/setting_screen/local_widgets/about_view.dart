@@ -228,6 +228,30 @@ class _AboutViewState extends State<AboutView> {
             );
           },
         ),
+        Divider(
+          height: 1,
+          indent: 60,
+          color: textColor,
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.code,
+            color: textColor,
+          ),
+          title: Text(
+            AppLocalizations.of(context)!.open_source_declaration,
+            style: TextStyle(color: textColor),
+          ),
+          trailing: Icon(
+            Icons.arrow_forward_ios_rounded,
+            color: textColor,
+          ),
+          onTap: () async {
+            if (await canLaunch(globals.appRepoUrl)) {
+              await launch(globals.appRepoUrl);
+            }
+          },
+        ),
       ],
     );
   }

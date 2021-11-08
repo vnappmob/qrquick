@@ -18,8 +18,12 @@ final platformChannel =
 var uuid = Uuid();
 
 class CodeScreen extends StatefulWidget {
-  CodeScreen({this.code});
+  CodeScreen({
+    this.code,
+    this.preContent,
+  });
   final dynamic code;
+  final String? preContent;
 
   @override
   _CodeScreenState createState() => _CodeScreenState();
@@ -38,11 +42,12 @@ class _CodeScreenState extends State<CodeScreen> {
     if (widget.code == null) {
       code = {
         'name': '',
-        'content': '',
+        'content': widget.preContent ?? '',
         'uuid': '',
         'timestamp': '',
         'home_widget': false
       };
+      codeContent = widget.preContent ?? '';
     } else {
       code = widget.code;
       codeName = widget.code['name'] ?? '';
